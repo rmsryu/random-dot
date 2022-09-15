@@ -1,11 +1,9 @@
 from magicpy import autostereogram_from_image
 from os import path, mkdir
 import tensorflow as tf
-# Helper libraries
-from keras.preprocessing.image import image_dataset_from_directory
 
 batch_size = 5
-dataset_images = image_dataset_from_directory(directory="shapes/data", color_mode='grayscale', batch_size=batch_size)
+dataset_images = tf.keras.utils.image_dataset_from_directory(directory="shapes/data", color_mode='grayscale', batch_size=batch_size)
 
 iterator = iter(dataset_images)
 class_names = dataset_images.class_names
@@ -22,16 +20,17 @@ try:
             baseDir = f"{dirname}\\shapes\\stereograms"
             outputDir=f"{baseDir}\\{className}"
             
-            if not path.exists(baseDir):
+            if path.exists(baseDir) is False:
                 mkdir(baseDir)
 
-            if not path.exists(outputDir):
+            if path.exists(outputDir) is False:
                 mkdir(outputDir)
 
             img = tf.keras.utils.array_to_img(images[i])
 
             output=f"{outputDir}\\{className}_{x}.png"
-            autostereogram_from_image(img, output=output, pattern_div=8, invert=1)
+            if path.exists(output) is False:
+                autostereogram_from_image(img, output=output, pattern_div=8, invert=1)
             
         
 except tf.errors.OutOfRangeError:

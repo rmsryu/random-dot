@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import numpy
 import math
-from PIL import Image
+from PIL import Image, ImageOps
 
 def gen_pattern(width: int, height: int):
     """Generate random dots
@@ -14,6 +14,13 @@ def gen_pattern(width: int, height: int):
         _type_: returns array of random dots
     """    
     return numpy.random.randint(0, 256, (int(math.ceil(width)), int(math.ceil(height))))
+
+def convert_image_black_white(imageFile: str, output = "output.png"):
+    image = Image.open(imageFile).convert("L")
+    outputImg = ImageOps.colorize(image, black ="black", white ="white")
+    outputImg = ImageOps.autocontrast(outputImg, cutoff=1)
+    outputImg.save(output);
+
 
 def autostereogram_from_file_path(image: str, output = "output.png", pattern_div = 8, invert = -1, resize = (1024, 1024)):
     """Generate stereogram from image file path
