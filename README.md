@@ -27,3 +27,16 @@ magiceye_gen
 ### Hadoop
 1. python client for hdfs `pip install hdfs`
 2. 
+
+
+## Tensorflow
+
+Learning tutorial
+https://www.tensorflow.org/tutorials/images/transfer_learning
+
+## Simplify data conversion from Spark to TensorFlow
+https://learn.microsoft.com/en-us/azure/databricks/_static/notebooks/deep-learning/petastorm-spark-converter-tensorflow.html
+
+
+# Distributed training
+> Install horovod: https://horovod.readthedocs.io/en/stable/install_include.html (only linux)

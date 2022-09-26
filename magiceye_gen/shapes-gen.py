@@ -1,3 +1,4 @@
+import progressbar
 from magicpy import autostereogram_from_image
 from os import path, mkdir
 import tensorflow as tf
@@ -5,10 +6,13 @@ import tensorflow as tf
 batch_size = 5
 dataset_images = tf.keras.utils.image_dataset_from_directory(directory="shapes/data", color_mode='grayscale', batch_size=batch_size)
 
+#set progress bar
+bar = progressbar.ProgressBar(max_value=16000)
+barprogress = 0
+
 iterator = iter(dataset_images)
 class_names = dataset_images.class_names
 x = 0
-
 try: 
     # Keep running next_batch till the Dataset is exhausted
     while True:
@@ -31,6 +35,9 @@ try:
             output=f"{outputDir}\\{className}_{x}.png"
             if path.exists(output) is False:
                 autostereogram_from_image(img, output=output, pattern_div=8, invert=1)
+            
+            barprogress += 1
+            bar.update(barprogress)
             
         
 except tf.errors.OutOfRangeError:
